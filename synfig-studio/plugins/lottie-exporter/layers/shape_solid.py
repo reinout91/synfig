@@ -5,6 +5,7 @@ shapes in lottie
 
 import sys
 import settings
+import re
 from helpers.transform import gen_helpers_transform
 from helpers.blendMode import get_blend
 from helpers.mask import gen_mask
@@ -83,7 +84,13 @@ def gen_layer_shape_solid(lottie, layer, idx):
         if val == "true":
             invert = True
 
-    lottie["ip"] = settings.lottie_format["ip"]
+    # hackvars to change layer properties using layer names.
+    # For example: a layet with the name: left_arm_-_ip_30 will init the at the 30th frame.
+    if '_-_' in layer.get_description():
+        hackvars = re.split('_',re.split('_-_',layer.get_description())[1])
+        lottie["ip"] = 1 + int(hackvars[1]) #The +1 is needed to stop flashing.
+    else:
+        lottie["ip"] = settings.lottie_format["ip"]
     lottie["op"] = settings.lottie_format["op"]
     lottie["st"] = 0            # Don't know yet
     get_blend(lottie, layer)
