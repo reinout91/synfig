@@ -85,7 +85,7 @@ def gen_layer_shape_solid(lottie, layer, idx):
             invert = True
 
     # hackvars to change layer properties using layer names.
-    # For example: a layet with the name: left_arm_-_ip_30 will init the at the 30th frame.
+    # For example: a layer with the name: left_arm_-_ip_30 will init the at the 30th frame.
     if '_-_' in layer.get_description():
         hackvars = re.split('_',re.split('_-_',layer.get_description())[1])
         lottie["ip"] = 1 + int(hackvars[1]) #The +1 is needed to stop flashing.
